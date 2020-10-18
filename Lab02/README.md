@@ -57,11 +57,9 @@ output:
     }
 ]
 ```
-Change the current directory to the Mountpoint of the volume *(Please mind that superuser rights are required for this action)*:
+Print the content of the `ping-pong.log` file which can be found in the path of the volume's `Mountpoint` *(Please mind that superuser rights are required for this action)*:
 ```
-sudo su
-cd /var/lib/docker/volumes/ping-pong-volume/_data
-cat ping-pong.log
+sudo cat /var/lib/docker/volumes/ping-pong-volume/_data/ping-pong.log 
 ```
 If every PING followed by a PONG (like in the output below) that means that everything works :)
 
