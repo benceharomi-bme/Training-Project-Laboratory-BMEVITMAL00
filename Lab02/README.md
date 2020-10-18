@@ -1,32 +1,35 @@
 # PING-PONG
+Create a network with 2 connected containers (*server* and *client*) which send *PING* and *PONG* messages to each other.
+Ensure persistent storage of the logs.
 
+Tasks:
+  * create a `Dockerfile` and build a docker image which contains the python resource files (`server.py` and `client.py`)
+  * setting up a docker network for the containers
+  * creating a volume to save the logs (both the client and the server logs can be found in this path: `/tmp/ping-pong.log`)
+  * starting the containers and checking the logs to check if everything works the way it should
 
 ## Setting up the environment
+Building the image and creating the network and the volume.
 
-### Build
 Build the docker image with this command:
 ```
 docker build -t ping-pong-alpine:v1 src
 ```
-### Network
 Create the network with this command:
 ```
 docker network create ping-pong-network 
 ```
-
-### Volume
 Create the volume with this command:
 ```
 docker volume create ping-pong-volume
 ```
 
 ## Run
-### Server
+Starting the server and the client:
 Start the server with this command:
 ```
 docker run --net ping-pong-network -itd --name ping-pong-server -v ping-pong-volume:/tmp ping-pong-alpine:v1 python ./server.py ping-pong-server
 ```
-### Client
 Start the client with this command:
 ```
 docker run --net ping-pong-network -itd --name ping-pong-client -v ping-pong-volume:/tmp ping-pong-alpine:v1 python ./client.py ping-pong-server
@@ -52,14 +55,13 @@ output:
     }
 ]
 ```
-Change the current directory to the Mountpoint of the volume:
-*Mind that superuser rights are required for this action*
+Change the current directory to the Mountpoint of the volume *(Please mind that superuser rights are required for this action)*:
 ```
 sudo su
 cd /var/lib/docker/volumes/ping-pong-volume/_data
 cat ping-pong.log
 ```
-If the every PING followed by a PONG (like in the output below) that means that everything works :)
+If every PING followed by a PONG (like in the output below) that means that everything works :)
 
 output:
 ```
