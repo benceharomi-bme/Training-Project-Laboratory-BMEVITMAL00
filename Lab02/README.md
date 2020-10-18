@@ -11,6 +11,8 @@ Tasks:
 ## Setting up the environment
 Building the image and creating the network and the volume.
 
+*Make sure you are in the root of the `Lab02` directory.*
+
 Build the docker image with this command:
 ```
 docker build -t ping-pong-alpine:v1 src
