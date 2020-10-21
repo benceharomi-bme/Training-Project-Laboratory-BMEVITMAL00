@@ -18,10 +18,16 @@ You can find the official microk8s docs [here](https://microk8s.io/docs).
 ## Starting the pods
 Start 2 pods:
 ```
-microk8s kubectl run my-box -i --tty --rm --image=busybox --restart=Never -- sh &
-microk8s kubectl run my-box-2 -i --tty --rm --image=busybox --restart=Never -- sh &
+microk8s kubectl run my-box -i --rm --image=busybox --restart=Never &
+microk8s kubectl run my-box-2 -i --rm --image=busybox --restart=Never &
 ```
-*Explaination of the flags: the `i` is to run*
+*Explaination of the flags:*
+ * *the `i` flag keeps the STDIN open even if running in detached mode*
+ * *the `--rm` means that after the container exits it should be removed*
+ * *with the `--image=busybox` the wanted image can be set, in this case `busybox`*
+ * *the `--restart=NEVER` means that the container will not be restarted regardless of why it exited*
+ * *and lastly the `&` means that we would like to detach the container*
+
 You can check out the pods:
 ```
 microk8s kubectl get po
