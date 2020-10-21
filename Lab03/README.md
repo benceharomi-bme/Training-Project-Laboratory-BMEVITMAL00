@@ -1,5 +1,5 @@
 # Kubernetes
-## Ping
+## The task
 Using the `microk8s` start 2 pods with 1 container in each. From the inside of one of the containers ping the other pod's container (mind that you sould know the pod's
 IP address what you can easily find out by executing the `ip a` command inside the pod or just by running the `kubectl describe po my-pod` where the
 *my-pod* is the name of your pod).  
@@ -18,12 +18,11 @@ You can find the official microk8s docs [here](https://microk8s.io/docs).
 ## Starting the pods
 Start 2 pods:
 ```
-microk8s kubectl run my-box -i --rm --image=busybox --restart=Never &
-microk8s kubectl run my-box-2 -i --rm --image=busybox --restart=Never &
+microk8s kubectl run my-box -i --image=busybox --restart=Never &
+microk8s kubectl run my-box-2 -i --image=busybox --restart=Never &
 ```
 *Explaination of the flags:*
  * *the `i` flag keeps the STDIN open even if running in detached mode*
- * *the `--rm` means that after the container exits it should be removed*
  * *with the `--image=busybox` the wanted image can be set, in this case `busybox`*
  * *the `--restart=NEVER` means that the container will not be restarted regardless of why it exited*
  * *and lastly the `&` means that we would like to detach the container*
@@ -69,7 +68,7 @@ PING 10.1.179.75 (10.1.179.75): 56 data bytes
 64 bytes from 10.1.179.75: seq=3 ttl=63 time=0.147 ms
 ```
 
-## Deleting the pods
+## Cleaning up
 Check out the name of the node where is your pod you want delete:
 ```
 microk8s kubectl get nodes
