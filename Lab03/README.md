@@ -90,3 +90,6 @@ Uncordon the node:
 microk8s kubectl uncordon my-node
 ```
 *Where `my-node` is the name of the node.*
+
+## Other useful things
+[kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/?fbclid=IwAR08mgxaLWgP4IMXFPvFtZ_6zKH5goSw6UE2Bzzcpm0q85Ia9AZ4x9Fh03k)
