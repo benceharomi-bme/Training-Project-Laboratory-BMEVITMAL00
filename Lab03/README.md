@@ -69,7 +69,7 @@ PING 10.1.179.75 (10.1.179.75): 56 data bytes
 ```
 
 ## Cleaning up
-Check out the name of the node where is your pod you want delete:
+Check out the node, where that pod is located, which you want to delete:
 ```
 microk8s kubectl get nodes
 ```
