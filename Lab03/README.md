@@ -38,7 +38,7 @@ my-box     1/1     Running   0          32m
 my-box-2   1/1     Running   0          10m
 ```
 ## Ping
-Use the `-o wide` to see more details about them:
+Use the `-o widw` to see more details about them:
 ```
 microk8s kubectl get po -o wide
 ```
