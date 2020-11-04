@@ -15,11 +15,16 @@ sudo chown -f -R $USER ~/.kube
 su - $USER
 ```
 You can find the official microk8s docs [here](https://microk8s.io/docs).
+
+From now on if you are using *microk8s* you should type `microk8s` before every `kubectl` command, like this:
+```
+microk8s kubectl some_command
+```
 ## Starting the pods
 Start 2 pods:
 ```
-microk8s kubectl run my-box -i --image=busybox --restart=Never &
-microk8s kubectl run my-box-2 -i --image=busybox --restart=Never &
+kubectl run my-box -i --image=busybox --restart=Never &
+kubectl run my-box-2 -i --image=busybox --restart=Never &
 ```
 *Explaination of the flags:*
  * *the `i` flag keeps the STDIN open even if running in detached mode*
@@ -29,7 +34,7 @@ microk8s kubectl run my-box-2 -i --image=busybox --restart=Never &
 
 You can check out the pods:
 ```
-microk8s kubectl get po
+kubectl get po
 ```
 You can see that they are running:
 ```
@@ -40,7 +45,7 @@ my-box-2   1/1     Running   0          10m
 ## Ping
 Use the `-o wide` to see more details about them:
 ```
-microk8s kubectl get po -o wide
+kubectl get po -o wide
 ```
 Check out the IP address of the `my-box-2`:
 ```
@@ -53,7 +58,7 @@ In my case: `10.1.179.75`
 
 Connect in iteractive mode to `my-box`:
 ```
-microk8s kubectl exec -it my-box -- sh
+kubectl exec -it my-box -- sh
 ```
 Ping `my-box-2` from `my-box`:
 ```
@@ -69,27 +74,10 @@ PING 10.1.179.75 (10.1.179.75): 56 data bytes
 ```
 
 ## Cleaning up
-Check out the node, where that pod is located, which you want to delete:
-```
-microk8s kubectl get nodes
-```
-Mark the node as unschedulable:
-```
-microk8s kubectl cordon my-node
-```
-*Where `my-node` is the name of the node.*
-
 For deleting a pod just execute:
 ```
-microk8s kubectl delete pod --wait=false my-box
+kubectl delete pod my-box
 ```
-*Where the `my-box` is the name of the pod you want to delete and the `--force` flag is setting to delete the pod immediately.*
-
-Uncordon the node:
-```
-microk8s kubectl uncordon my-node
-```
-*Where `my-node` is the name of the node.*
 
 ## Other useful things
 [kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/?fbclid=IwAR08mgxaLWgP4IMXFPvFtZ_6zKH5goSw6UE2Bzzcpm0q85Ia9AZ4x9Fh03k)
