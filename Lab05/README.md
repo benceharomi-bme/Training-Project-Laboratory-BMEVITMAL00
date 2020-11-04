@@ -101,15 +101,15 @@ microk8s enable dns
 ```
 Create the namespace:
 ```
-kubectl apply -f src/kubernetes/namespace/namespace.yaml
+kubectl apply -f kubernetes/namespace/namespace.yaml
 ```
 Start the deployment:
 ```
-kubectl apply -f src/kubernetes/deployment/deployment.yaml
+kubectl apply -f kubernetes/deployment/deployment.yaml
 ```
 Start the service:
 ```
-kubectl apply -f src/kubernetes/service/service.yaml
+kubectl apply -f kubernetes/service/service.yaml
 ```
 
 Check out the port of the  service:
