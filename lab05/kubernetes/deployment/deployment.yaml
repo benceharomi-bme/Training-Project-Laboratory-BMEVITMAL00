@@ -1,0 +1,25 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: counter-deployment
+  labels:
+    app: nginx-lab
+spec:
+  selector:
+    matchLabels:
+      app: nginx-lab
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx-lab
+    spec:
+      containers:
+      - name: server
+        image: benceharomi/counterrepo:counter
+        ports:
+        - containerPort: 8080
+      - name: client
+        image: ellerbrock/alpine-bash-curl-ssl
+        command: ["ash", "-c"]
+        args: ["while true; do curl -L localhost:8080; sleep 1; done"]
