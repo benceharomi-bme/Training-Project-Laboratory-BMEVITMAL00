@@ -2,17 +2,18 @@ apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
   name: counter-deployment
+  namespace: counter-namespace
   labels:
-    app: nginx-lab
+    app: counter-app
 spec:
   selector:
     matchLabels:
-      app: nginx-lab
+      app: counter-app
   replicas: 2
   template:
     metadata:
       labels:
-        app: nginx-lab
+        app: counter-app
     spec:
       containers:
       - name: server

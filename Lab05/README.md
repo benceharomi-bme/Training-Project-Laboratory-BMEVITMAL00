@@ -82,6 +82,7 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 counter             latest              72daeda6204b        5 days ago          55.7MB
 ```
 In my case the image ID is `72daeda6204b`
+
 Tag the image:
 ```
 docker tag 72daeda6204b yourusername/yourrepo:counter
@@ -94,14 +95,39 @@ Your image is now available for everyone to use.
 
 ### Deployment
 
+Please mind that if you are using `microk8s` then the dns should be enabled which you can do by executing this command:
 ```
 microk8s enable dns
 ```
+Create the namespace:
+```
+kubectl apply -f src/kubernetes/namespace/namespace.yaml
+```
+Start the deployment:
+```
+kubectl apply -f src/kubernetes/deployment/deployment.yaml
+```
+Start the service:
+```
+kubectl apply -f src/kubernetes/service/service.yaml
+```
 
+Check out the port of the  service:
 ```
-microk8s kubectl apply -f kubernetes/deployment/deployment.yaml
+kubectl get service --namespace counter-namespace
 ```
-
+You can see in the output below that in my case the port is `30697`:
 ```
-microk8s kubectl apply -f kubernetes/service/service.yaml
+NAME              TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+counter-service   LoadBalancer   10.152.183.30   <pending>     8080:30697/TCP   2m57s
+```
+Ping the port:
+```
+curl -L localhost:30697
+```
+The output should look like similar to this:
+```
+{
+  "count": 276
+}
 ```

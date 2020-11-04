@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-pod
-  namespace: practice_session-<your_name_here>
+  name: counter-pod
+  namespace: counter-namespace
 spec:
   containers:
   - name: nginx

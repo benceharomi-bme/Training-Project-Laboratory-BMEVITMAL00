@@ -2,9 +2,10 @@ kind: Service
 apiVersion: v1
 metadata:
   name: counter-service
+  namespace: counter-namespace
 spec:
   selector:
-    app: nginx-lab #Pod binding, see in dep.yaml spec->selector->matchlabels->app has the same value. Connecting the service with the pods/deployment is done by this value.
+    app: counter-app #Pod binding, see in dep.yaml spec->selector->matchlabels->app has the same value. Connecting the service with the pods/deployment is done by this value.
   ports:
   - protocol: TCP #Specifies the protocol
     port: 8080 #This port will be forwarded. In this case Nginx is listening on port 80 from the pod
