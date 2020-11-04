@@ -95,6 +95,10 @@ Your image is now available for everyone to use.
 ### Deployment
 
 ```
+microk8s enable dns
+```
+
+```
 microk8s kubectl apply -f kubernetes/deployment/deployment.yaml
 ```
 
