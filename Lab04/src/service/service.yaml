@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-service-example
+  namespace: practice-session
+spec:
+  selector:
+    app: nginx-lab #Pod binding, see in dep.yaml spec->selector->matchlabels->app has the same value. Connecting the service with the pods/deployment is done by this value.
+  ports:
+  - protocol: TCP #Specifies the protocol
+    port: 80 #This port will be forwarded. In this case Nginx is listening on port 80 from the pod
+  type: LoadBalancer #To enable a public port which is used to access the service from out of the cluster, this can be nodeport and so much other, for further information please check the documentation 
