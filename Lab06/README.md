@@ -51,6 +51,7 @@ Deploy the *deployments*:
 ```
 kubectl apply -f src/kubernetes/deployment/
 ```
+List the pods:
 ```
 kubectl get po -o wide -n voting-app-namespace
 ```
@@ -63,9 +64,11 @@ redis-deployment-67f9dd6bc6-2zb79    1/1     Running            0          150m 
 vote-deployment-7ddb576d64-x75vb     1/1     Running            0          150m   10.1.179.115   pop-os   <none>           <none>
 worker-deployment-65b859946c-t6d8r   0/1     CrashLoopBackOff   27         127m   10.1.179.125   pop-os   <none>           <none>
 ```
+List the services:
 ```
 kubectl get service -n voting-app-namespace
 ```
+Output:
 ```
 NAME             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 db-service       ClusterIP      10.152.183.113   <none>        5432/TCP       5h43m
@@ -73,6 +76,7 @@ redis-service    ClusterIP      10.152.183.36    <none>        6379/TCP       5h
 result-service   LoadBalancer   10.152.183.98    <pending>     80:30560/TCP   5h43m
 vote-service     LoadBalancer   10.152.183.147   <pending>     80:31699/TCP   5h43m
 ```
+See the worker logs:
 ```
 kubectl logs worker-deployment-65b859946c-t6d8r -n voting-app-namespace
 ```
