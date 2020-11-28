@@ -39,11 +39,14 @@ Push your images to the repository you created:
 docker push your-username/your-repo
 ```
 ### Deployment
-There are 2 possible solutions, a five-pod and a three-pod solution. Firstly I'm gonna show the five-pod solution.
 ![](assets/architecture.png)
-#### Five-pod solution
-In this solution every container placed in a pod on it's own.
+There are 2 possible solutions, a five-pod and a three-pod solution.
+With the first one every container placed in a pod on it's own.
+With the three-pod solutionthe voting-app joined with the redis are into
+one pod and the result-app joined with the db to another one.
+Firstly I'm gonna show the five-pod solution.
 
+#### Five-pod solution
 First of all create the *namespace*:
 ```
 kubectl apply -f src/kubernetes/five-pod-solution/namespace/namespace.yaml
