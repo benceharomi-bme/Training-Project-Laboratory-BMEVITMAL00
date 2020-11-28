@@ -39,74 +39,106 @@ Push your images to the repository you created:
 docker push your-username/your-repo
 ```
 ### Deployment
-Create the *namespace*:
+There are 2 possible solutions, a five-pod and a three-pod solution. Firstly I'm gonna show the five-pod solution.
+#### Five-pod solution
+In this solution every container placed in a pod on it's own.
+
+First of all create the *namespace*:
 ```
-kubectl apply -f src/kubernetes/namespace/namespace.yaml
+kubectl apply -f src/kubernetes/five-pod-solution/namespace/namespace.yaml
 ```
 Deploy the *services*:
 ```
-kubectl apply -f src/kubernetes/services/
+kubectl apply -f src/kubernetes/five-pod-solution/service/
 ```
 Deploy the *deployments*:
 ```
-kubectl apply -f src/kubernetes/deployment/
+kubectl apply -f src/kubernetes/five-pod-solution/deployment/
 ```
 List the pods:
 ```
-kubectl get po -o wide -n voting-app-namespace
+kubectl get po -o wide -n voting-app
 ```
 Output:
 ```
-NAME                                 READY   STATUS             RESTARTS   AGE    IP             NODE     NOMINATED NODE   READINESS GATES
-db-deployment-7d44bb9987-64h25       1/1     Running            0          150m   10.1.179.104   pop-os   <none>           <none>
-result-deployment-5f4b86484f-htrng   1/1     Running            0          150m   10.1.179.117   pop-os   <none>           <none>
-redis-deployment-67f9dd6bc6-2zb79    1/1     Running            0          150m   10.1.179.110   pop-os   <none>           <none>
-vote-deployment-7ddb576d64-x75vb     1/1     Running            0          150m   10.1.179.115   pop-os   <none>           <none>
-worker-deployment-65b859946c-t6d8r   0/1     CrashLoopBackOff   27         127m   10.1.179.125   pop-os   <none>           <none>
+NAME                      READY   STATUS    RESTARTS   AGE
+db-77464d4957-vv982       1/1     Running   0          24s
+redis-fd7cc6786-k5nd6     1/1     Running   0          24s
+result-75b8bd76b7-rwdfm   1/1     Running   0          24s
+vote-79cc99d9d6-4rnq2     1/1     Running   0          24s
+worker-9fc48559c-vp4bj    1/1     Running   0          24s
 ```
+Everything up and running.
 List the services:
 ```
-kubectl get service -n voting-app-namespace
+kubectl get svc -n voting-app
 ```
 Output:
 ```
-NAME             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-db-service       ClusterIP      10.152.183.113   <none>        5432/TCP       5h43m
-redis-service    ClusterIP      10.152.183.36    <none>        6379/TCP       5h43m
-result-service   LoadBalancer   10.152.183.98    <pending>     80:30560/TCP   5h43m
-vote-service     LoadBalancer   10.152.183.147   <pending>     80:31699/TCP   5h43m
+NAME     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+db       ClusterIP      10.108.189.193   <none>        5432/TCP       69s
+redis    ClusterIP      10.103.187.97    <none>        6379/TCP       69s
+result   LoadBalancer   10.100.249.233   <pending>     80:32050/TCP   69s
+vote     LoadBalancer   10.110.111.254   <pending>     80:31907/TCP   69s
 ```
-See the worker logs:
+Find the port of the *vote*. In my case it's `31907` check out `localhost:31907` in your browser and vote.
+I'm using lynx because I'm accessing the server through a jump server and cannot access the server's IP address remotely.
 ```
-kubectl logs worker-deployment-65b859946c-t6d8r -n voting-app-namespace
+lynx localhost:31907
 ```
 Output:
 ```
-System.AggregateException: One or more errors occurred. (Resource temporarily unavailable) ---> System.Net.Internals.SocketExceptionFactory+ExtendedSocketException: Resource temporarily unavailable
-   at System.Net.Dns.InternalGetHostByName(String hostName, Boolean includeIPv6)
-   at System.Net.Dns.ResolveCallback(Object context)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-   at System.Net.Dns.HostResolutionEndHelper(IAsyncResult asyncResult)
-   at System.Net.Dns.EndGetHostAddresses(IAsyncResult asyncResult)
-   at System.Net.Dns.<>c.<GetHostAddressesAsync>b__25_1(IAsyncResult asyncResult)
-   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
-   --- End of inner exception stack trace ---
-   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
-   at Npgsql.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
-   at Npgsql.NpgsqlConnector.RawOpen(NpgsqlTimeout timeout)
-   at Npgsql.NpgsqlConnector.Open(NpgsqlTimeout timeout)
-   at Npgsql.ConnectorPool.Allocate(NpgsqlConnection conn, NpgsqlTimeout timeout)
-   at Npgsql.NpgsqlConnection.OpenInternal()
-   at Worker.Program.OpenDbConnection(String connectionString) in /code/src/Worker/Program.cs:line 78
-   at Worker.Program.Main(String[] args) in /code/src/Worker/Program.cs:line 19
----> (Inner Exception #0) System.Net.Internals.SocketExceptionFactory+ExtendedSocketException (0x00000001): Resource temporarily unavailable
-   at System.Net.Dns.InternalGetHostByName(String hostName, Boolean includeIPv6)
-   at System.Net.Dns.ResolveCallback(Object context)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-   at System.Net.Dns.HostResolutionEndHelper(IAsyncResult asyncResult)
-   at System.Net.Dns.EndGetHostAddresses(IAsyncResult asyncResult)
-   at System.Net.Dns.<>c.<GetHostAddressesAsync>b__25_1(IAsyncResult asyncResult)
-   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)<---
+Cats vs Dogs!
+
+   (a) Cats (b) Dogs
+   (Tip: you can change your vote)
+   Processed by container ID vote-79cc99d9d6-4rnq2
+
 ```
+You can also check out the results if you use the port of the `result` pod which is `32050`
+```
+lynx localhost:3250
+```
+Output:
+```
+   Cats
+   {{aPercent | number:1}}%
+   Dogs
+   {{bPercent | number:1}}%
+
+   No votes yet {{total}} vote {{total}} votes
+```
+Unfortunately with *lynx* the results cannot be checked so I have to see the database if the records are stored.
+The database's IP address is `10.108.189.193` and the port is `5432` and I am using psql to connect to it.
+```
+psql postgres://postgres:postgres@10.108.189.193:5432/postgres
+```
+List relations with the `\d` command to find out what is the name of the table where the votes stored.
+```
+postgres=# \d
+```
+Output:
+```
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ public | votes | table | postgres
+(1 row)
+```
+Surprisingly the votes are stored in the `votes` table. :)
+
+List the records of the *votes* table:
+```
+postgres=# select * from votes;
+```
+Output:
+```
+        id        | vote 
+------------------+------
+ a1b06a7af5a8093a | a
+(1 row)
+```
+And there is a record which means that the vote succesfully stored in the database.
+
+#### Five-pod solution
+
