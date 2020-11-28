@@ -40,6 +40,7 @@ docker push your-username/your-repo
 ```
 ### Deployment
 There are 2 possible solutions, a five-pod and a three-pod solution. Firstly I'm gonna show the five-pod solution.
+![](assets/architecture.png)
 #### Five-pod solution
 In this solution every container placed in a pod on it's own.
 
