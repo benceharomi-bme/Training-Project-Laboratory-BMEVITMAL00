@@ -140,5 +140,5 @@ Output:
 ```
 And there is a record which means that the vote succesfully stored in the database.
 
-#### Five-pod solution
+#### Three-pod solution
 
