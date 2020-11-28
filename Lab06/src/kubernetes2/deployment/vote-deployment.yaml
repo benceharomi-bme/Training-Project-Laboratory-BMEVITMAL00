@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vote
-  namespace: vote
+  namespace: voting-app
   labels:
     app: vote
 spec:

@@ -4,7 +4,7 @@ metadata:
   name: result
   labels:
     app: result
-  namespace: vote
+  namespace: voting-app
 spec:
   type: LoadBalancer
   selector:
