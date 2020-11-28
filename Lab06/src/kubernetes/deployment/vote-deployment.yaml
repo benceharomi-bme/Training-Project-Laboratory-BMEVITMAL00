@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vote-deployment
-  namespace: voting-app-namespace
+  name: vote
+  namespace: vote
   labels:
-    app: vote-app
+    app: vote
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: vote-app
+      app: vote
   template:
     metadata:
       labels:
-        app: vote-app
+        app: vote
     spec:
       containers:
       - name: vote

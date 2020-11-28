@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-deployment
-  namespace: voting-app-namespace
+  name: redis
+  namespace: vote
   labels:
-    app: redis-app
+    app: redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis-app
+      app: redis
   template:
     metadata:
       labels:
-        app: redis-app
+        app: redis
     spec:
       containers:
       - name: redis

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: worker-deployment
-  namespace: voting-app-namespace
+  name: worker
+  namespace: vote
   labels:
-    app: worker-app
+    app: worker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: worker-app
+      app: worker
   template:
     metadata:
       labels:
-        app: worker-app
+        app: worker
     spec:
       containers:
       - name: worker
