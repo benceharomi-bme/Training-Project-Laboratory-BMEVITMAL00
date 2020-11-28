@@ -61,7 +61,7 @@ kubectl apply -f src/kubernetes/five-pod-solution/deployment/
 ```
 List the pods:
 ```
-kubectl get po -o wide -n voting-app
+kubectl get po -o wide -n vote
 ```
 Output:
 ```
@@ -75,7 +75,7 @@ worker-9fc48559c-vp4bj    1/1     Running   0          24s
 Everything up and running.
 List the services:
 ```
-kubectl get svc -n voting-app
+kubectl get svc -n vote
 ```
 Output:
 ```
