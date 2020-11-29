@@ -15,3 +15,4 @@ spec:
     targetPort: 80
   - name: redis
     port: 6379
+    targetPort: 6379
